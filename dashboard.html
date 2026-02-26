@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>UMKM Sphere | Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+</head>
+
+<body>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h2>UMKM Sphere</h2>
+    <nav>
+      <a href="#">🏠 Dashboard</a>
+      <a href="#">📦 Produk</a>
+      <a href="#">🛒 Transaksi</a>
+      <a href="#">💰 Keuangan</a>
+      <a href="#">🤖 AI UMKM</a>
+      <a href="#">📢 Marketing</a>
+    </nav>
+
+    <button class="mode-btn" onclick="toggleTheme()">🌙 Mode</button>
+    <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="content">
+    <header class="header">
+      <h1>Dashboard UMKM</h1>
+      <p>Ringkasan performa bisnis Anda</p>
+    </header>
+
+    <!-- INFO CARDS -->
+    <section class="cards">
+      <div class="card">
+        <h4>Omzet</h4>
+        <p>Rp 18.500.000</p>
+      </div>
+      <div class="card">
+        <h4>Produk</h4>
+        <p>32</p>
+      </div>
+      <div class="card">
+        <h4>Transaksi</h4>
+        <p>148</p>
+      </div>
+      <div class="card">
+        <h4>Pelanggan</h4>
+        <p>97</p>
+      </div>
+    </section>
+
+    <!-- GRAFIK -->
+    <section class="box">
+      <h3>📈 Grafik Penjualan Bulanan</h3>
+      <canvas id="salesChart" height="120"></canvas>
+    </section>
+
+    <!-- TABLE -->
+    <section class="box">
+      <h3>🔥 Produk Terlaris</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Produk</th>
+            <th>Harga</th>
+            <th>Terjual</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Kopi Arabika</td>
+            <td>Rp 30.000</td>
+            <td>58</td>
+          </tr>
+          <tr>
+            <td>Keripik Pisang</td>
+            <td>Rp 15.000</td>
+            <td>42</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- AI BOX -->
+    <section class="box ai">
+      <h3>🤖 AI Recommendation</h3>
+      <ul>
+        <li>Naikkan stok <b>Kopi Arabika</b></li>
+        <li>Promo optimal jam <b>18.00 – 21.00</b></li>
+        <li>Harga ideal: <b>Rp 29.000</b></li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- APP LOGIC -->
+  <script src="app.js"></script>
+
+  <!-- GRAFIK SCRIPT -->
+  <script>
+    const ctx = document.getElementById("salesChart");
+    new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun"],
+        datasets: [{
+          label: "Penjualan (Rp)",
+          data: [3000000, 4500000, 4000000, 6000000, 7500000, 8500000],
+          borderWidth: 3,
+          tension: 0.4,
+          fill: false
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: true }
+        }
+      }
+    });
+  </script>
+
+  <!-- PROTEKSI LOGIN -->
+  <script>
+    firebase.auth().onAuthStateChanged(user => {
+      if (!user) {
+        window.location.href = "index.html";
+      }
+    });
+  </script>
+</body>
+</html>
